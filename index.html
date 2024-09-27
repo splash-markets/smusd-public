@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>SMUSDC</title>
+    <style>
+        html {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        body {
+            padding: 30px;
+        }
+    </style>
+    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+    <script type="module" src="app.js"></script>
+</head>
+<body>
+    <button id="wallet_btn">Connect devnet wallet</button>
+    <span id="wallet_id"></span>
+    <br><br>
+    <button id="airdrop">Airdrop devnet sols</button>
+    <span id="balance"></span>
+    <hr>
+    <form id="smusdc_form">
+        <h2>Get SMUSDC</h2>
+        <p id="description"></p>
+        <input type="submit" value="Ok, gimme SMUSDC">
+    </form>
+</body>
+</html>
