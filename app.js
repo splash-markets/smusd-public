@@ -4,9 +4,9 @@ const PROVIDER = getProvider();
 const WALLET_ID = document.getElementById('wallet_id');
 const BALANCE = document.getElementById('balance');
 const CONNECTION = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('devnet'));
-const PROGRAM_ID = new solanaWeb3.PublicKey('');
-const MINT = new solanaWeb3.PublicKey('');
-const MINT_AUTH = new solanaWeb3.PublicKey('');
+const PROGRAM_ID = new solanaWeb3.PublicKey('3QXWXyWGoodXqNqX86AjSacEfv9dgu4aauF3s3qCCwv2');
+const MINT = new solanaWeb3.PublicKey('SMUSDBKt1cydTsvZmSHBS2CWAoi32FWPdFD7u9SwH3w');
+const MINT_AUTH = new solanaWeb3.PublicKey('3iXwE1P6manizqC1pVaK4MVdNcqUtBKxJbCrDUMxHZmH');
 const TOKEN_2022_PROGRAM_ID = new solanaWeb3.PublicKey('TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb');
 const SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID = new solanaWeb3.PublicKey(
     'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL',
@@ -66,7 +66,7 @@ function mint_smusdc(wallet_id, ata) {
             { isSigner: false, isWritable: true, pubkey: ata },
             { isSigner: false, isWritable: true, pubkey: MINT },
             { isSigner: false, isWritable: false, pubkey: solanaWeb3.SYSVAR_RENT_PUBKEY },
-            { isSigner: false, isWritable: false, pubkey: TOKEN_PROGRAM_ID },
+            { isSigner: false, isWritable: false, pubkey: TOKEN_2022_PROGRAM_ID },
             { isSigner: false, isWritable: false, pubkey: SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID },
             { isSigner: false, isWritable: false, pubkey: solanaWeb3.SystemProgram.programId }
         ]
@@ -77,7 +77,7 @@ function get_smusdc_ata(wallet_id) {
     return solanaWeb3.PublicKey.findProgramAddressSync(
         [
             wallet_id.toBytes(),
-            TOKEN_PROGRAM_ID.toBytes(),
+            TOKEN_2022_PROGRAM_ID.toBytes(),
             MINT.toBytes()
         ],
         SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID
