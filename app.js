@@ -16,7 +16,7 @@ const SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID = new solanaWeb3.PublicKey(
     const res = await CONNECTION.getAccountInfo(MINT_AUTH);
     const data_view = new DataView(res.data.buffer);
     const max_wallet_balance = data_view.getUint16(1, false);
-    const description = `In the case of a new wallet, you'll get 1000 smusdcs. Otherwise max ${max_wallet_balance} ;)`;
+    const description = `In the case of a new wallet, you'll get 1000 smusd. Otherwise max ${max_wallet_balance} ;)`;
     document.getElementById('description').textContent = description;
 })();
 
@@ -38,6 +38,7 @@ document.getElementById('airdrop').onclick = async () => {
     await CONNECTION.confirmTransaction(sg);
 
     update_sol_balance(wallet_id);
+    //play splash audio
     console.log(sg);
 };
 
