@@ -16,7 +16,8 @@ const SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID = new solanaWeb3.PublicKey(
     const res = await CONNECTION.getAccountInfo(MINT_AUTH);
     const data_view = new DataView(res.data.buffer);
     const max_wallet_balance = data_view.getUint16(1, false);
-    const description = `In the case of a new wallet, you'll get 1000 smusd. Otherwise max ${max_wallet_balance} ;)`;
+    const description = `New users get 1000 SMUSD. Returning users can only top their wallet up to ${max_wallet_balance} SMUSD.
+Markets are set up to consider this so bet carefully.`;
     document.getElementById('description').textContent = description;
 })();
 
