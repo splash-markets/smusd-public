@@ -3,7 +3,7 @@ import { getProvider } from './phantom.js';
 const PROVIDER = getProvider();
 const WALLET_ID = document.getElementById('wallet_id');
 const BALANCE = document.getElementById('balance');
-const CONNECTION = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('devnet'));
+const CONNECTION = new solanaWeb3.Connection("https://devnet.helius-rpc.com/?api-key=1fe7d1fb-c283-404e-8bf4-231484ec3251");
 const PROGRAM_ID = new solanaWeb3.PublicKey('3QXWXyWGoodXqNqX86AjSacEfv9dgu4aauF3s3qCCwv2');
 const MINT = new solanaWeb3.PublicKey('SMUSDBKt1cydTsvZmSHBS2CWAoi32FWPdFD7u9SwH3w');
 const MINT_AUTH = new solanaWeb3.PublicKey('3iXwE1P6manizqC1pVaK4MVdNcqUtBKxJbCrDUMxHZmH');
@@ -101,5 +101,5 @@ async function sign_and_send_tx(tx) {
 
 async function update_sol_balance(wallet) {
     const res = await CONNECTION.getAccountInfo(wallet);
-    BALANCE.textContent = `Balance: ${res.lamports / 1e9} sols`;
+    BALANCE.textContent = `Balance: ${res.lamports / 1e9} sol`;
 }
