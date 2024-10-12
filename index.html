@@ -4,9 +4,22 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>SMUSD</title>
     <style>
+        :root {
+            background-color: white;
+            color-scheme: only light;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                color-scheme: light;
+            }
+        }
+        @media (forced-colors: active) {
+            :root {
+                color-scheme: light;
+            }
+        }
         html {
             font-family: 'Courier New', Courier, monospace;
-            background-color: white;
         }
         body {
             padding: 30px;
