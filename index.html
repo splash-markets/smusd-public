@@ -2,47 +2,35 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>SMUSD</title>
-    <style>
-        :root {
-            background-color: white;
-            color-scheme: only light;
-        }
-        @media (prefers-color-scheme: dark) {
-            :root {
-                color-scheme: light;
-            }
-        }
-        @media (forced-colors: active) {
-            :root {
-                color-scheme: light;
-            }
-        }
-        html {
-            font-family: 'Courier New', Courier, monospace;
-        }
-        body {
-            padding: 30px;
-            background-color: white;
-        }
-    </style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMUSD Faucet</title>
+    <link rel="stylesheet" type="" href="styles.css">
     <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
     <script type="module" src="app.js"></script>
 </head>
 <body>
-    <h1>Splash Markets devnet faucet</h1>
-    <h3>Switch your wallet to devnet to avoid the warnings from Phantom.</h3>
-    <h5>Open Phantom, click your wallet on top left, click the cog bottom right, Developer Settings, Testnet Mode.</h5>
-    <button id="wallet_btn">Connect wallet. Set it to devnet first - in wallet settings.</button>
-    <span id="wallet_id"></span>
-    <br><br>
-    <button id="airdrop">Get 1 devnet SOL if you need some.</button>
-    <span id="balance"></span>
-    <hr>
-    <form id="smusdc_form">
-        <h2>Now get SMUSD</h2>
-        <p id="description"></p>
-        <input type="submit" value="Ok, gimme SMUSD">
-    </form>
+    <header>
+        <img src="meta/icon.png" alt="token icon">
+        <h1>SMUSD Faucet</h1>
+    </header>
+
+    <main>
+        <div id="info">
+            <h3>Switch your wallet to devnet to avoid the warnings from Phantom.</h3>
+            <p>Open Phantom, click your wallet on top left, click the cog bottom right, Developer Settings, Testnet Mode.</p>
+        </div>
+
+        <button id="wallet_btn">Connect wallet. Set it to devnet first - in wallet settings.</button><br>
+        <span id="wallet_id"></span>
+        <button id="airdrop">Get 1 devnet SOL if you need some.</button><br>
+        <span id="balance"></span>
+        <hr>
+        <form id="smusdc_form">
+            <h2>Now get SMUSD</h2>
+            <p id="description"></p>
+            <input type="submit" value="Ok, gimme SMUSD">
+        </form>
+    </main>
 </body>
 </html>
