@@ -16,6 +16,7 @@ import { solanaWallets } from '@particle-network/connect';
 import '@particle-network/connect-react-ui/dist/index.css';
 import '@solana/wallet-adapter-react-ui/styles.css';
 import { Buffer } from 'buffer';
+import * as bs58 from 'bs58';
 window.Buffer = Buffer;
 const CONNECTION = new Connection("https://devnet.helius-rpc.com/?api-key=1fe7d1fb-c283-404e-8bf4-231484ec3251");
 const PROGRAM_ID = new PublicKey('3QXWXyWGoodXqNqX86AjSacEfv9dgu4aauF3s3qCCwv2');
@@ -160,12 +161,12 @@ function Main() {
                 const signedTransactions = await connectKit.particle.solana.signAllTransactions(
                     transactions.map(tx => {
                         // Serialize each transaction
-                        return Buffer.from(
+                        return bs58.default.encode(Buffer.from(
                             tx.serialize({
                                 verifySignatures: false,
                                 requireAllSignatures: false
-                            })
-                        ).toString('base64');
+                            }))
+                        );
                     })
                 );
 
