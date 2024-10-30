@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/p",
+    path: "/Faucet",
     element: (
    <div>   <AppP/></div>
     ),

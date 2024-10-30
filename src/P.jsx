@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { WalletProvider, useWallet } from '@solana/wallet-adapter-react';
-import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+// import { WalletProvider, useWallet } from '@solana/wallet-adapter-react';
 import {
     Connection, PublicKey, Transaction, LAMPORTS_PER_SOL,
     TransactionInstruction, SystemProgram, SYSVAR_RENT_PUBKEY
@@ -13,11 +12,12 @@ import {
 } from '@particle-network/connect-react-ui';
 import { SolanaDevnet } from '@particle-network/chains';
 import { solanaWallets } from '@particle-network/connect';
-import '@particle-network/connect-react-ui/dist/index.css';
+import './particle.css';
 import '@solana/wallet-adapter-react-ui/styles.css';
 import { Buffer } from 'buffer';
 import * as bs58 from 'bs58';
 window.Buffer = Buffer;
+
 const CONNECTION = new Connection("https://devnet.helius-rpc.com/?api-key=1fe7d1fb-c283-404e-8bf4-231484ec3251");
 const PROGRAM_ID = new PublicKey('3QXWXyWGoodXqNqX86AjSacEfv9dgu4aauF3s3qCCwv2');
 const MINT = new PublicKey('SMUSDBKt1cydTsvZmSHBS2CWAoi32FWPdFD7u9SwH3w');
@@ -49,12 +49,8 @@ const ParticleProvider = ({ children }) => {
 
 export default () => (
     <ParticleProvider>
-        <WalletProvider wallets={[]} autoConnect>
-            <WalletModalProvider>
                 <Header />
                 <Main />
-            </WalletModalProvider>
-        </WalletProvider>
     </ParticleProvider>
 );
 
@@ -70,25 +66,23 @@ function Header() {
 function Main() {
     const [balanceInfo, setBalanceInfo] = useState('');
     const [description, setDescription] = useState('');
-    const { connected, wallet } = useWallet();
     const account = useAccount();
     const connectKit = useConnectKit();
 
     const getWalletPublicKey = async () => {
         if (account) {
             try {
-                const address = await connectKit.particle.solana.getAddress();
+                const address = await connectKit.particle.solana.getAddress() || account ;
                 return new PublicKey(address);
             } catch (error) {
-                console.error('Error getting Particle wallet address:', error);
-                throw error;
+            
             }
         }
         return wallet?.adapter?.publicKey;
     };
 
     const update_sol_balance = async () => {
-        if (!account && !connected) return;
+        if (!account ) return;
         
         try {
             const publicKey = await getWalletPublicKey();
@@ -101,9 +95,8 @@ function Main() {
         }
     };
 
-
     const airdrop = async () => {
-        if (!account && !connected) {
+        if (!account ) {
             alert('Please connect your wallet first');
             return;
         }
@@ -126,8 +119,8 @@ function Main() {
     const submitHandler = async e => {
         e.preventDefault();
 
-        if (!account) {
-            alert('Please connect your Particle wallet first');
+        if (!account ) {
+            alert('Please connect a wallet first');
             return;
         }
 
@@ -137,86 +130,65 @@ function Main() {
                 throw new Error('Unable to get wallet public key');
             }
 
-            // Get the ATA (Associated Token Account)
             const ata = get_smusdc_ata(wallet_key);
             console.log(`Token account: ${ata.toBase58()}`);
 
-            // Create new transaction
             const tx = new Transaction();
-            
-            // Get fresh blockhash
             const { blockhash } = await CONNECTION.getLatestBlockhash('confirmed');
             tx.recentBlockhash = blockhash;
             tx.feePayer = wallet_key;
+            tx.add(mint_smusdc(wallet_key, ata));
 
-            // Add mint instruction
-            const mintInstruction = mint_smusdc(wallet_key, ata);
-            tx.add(mintInstruction);
+            let signature;
 
-            // Prepare transaction for Particle wallet
-            const transactions = [tx]; // Particle expects an array
-            
-            try {
-                // Sign all transactions using Particle
-                const signedTransactions = await connectKit.particle.solana.signAllTransactions(
-                    transactions.map(tx => {
-                        // Serialize each transaction
-                        return bs58.default.encode(Buffer.from(
-                            tx.serialize({
-                                verifySignatures: false,
-                                requireAllSignatures: false
-                            }))
-                        );
-                    })
-                );
-
-                // Get the first (and only) signed transaction
-                const signedTx = Transaction.from(
-                    Buffer.from(signedTransactions[0], 'base64')
-                );
-
-                // Send the signed transaction
-                const signature = await CONNECTION.sendRawTransaction(
-                    signedTx.serialize(),
-                    {
-                        skipPreflight: false,
-                        preflightCommitment: 'confirmed'
-                    }
-                );
-
-                console.log('Transaction sent:', signature);
-
-                // Wait for confirmation
-                const confirmation = await CONNECTION.confirmTransaction(signature, 'confirmed');
-
-                if (confirmation.value.err) {
-                    throw new Error(`Transaction failed: ${confirmation.value.err}`);
+            if (account) {
+                // Try Particle wallet first
+                try {
+                    const signedTransactions = await connectKit.particle.solana.signAllTransactions([tx]);
+                    const signedTx = Transaction.from(Buffer.from(signedTransactions[0], 'base64'));
+                    signature = await CONNECTION.sendRawTransaction(signedTx.serialize());
+                } catch (error) {
+                    console.log('Particle wallet signing failed, trying normal wallet adapter...');
+                    // if (!wallet?.adapter?.phansignTransaction) {
+                    //     throw new Error('No wallet available for signing');
+                    // }
+                    const signedTx = await window.phantom?.solana.signTransaction(tx);
+                    signature = await CONNECTION.sendRawTransaction(signedTx.serialize());
                 }
-
-                console.log('Transaction confirmed:', signature);
-                alert('Transaction finished. Check your wallet.');
-                
-                update_sol_balance();
-            } catch (error) {
-                if (error.message.includes('User rejected')) {
-                    alert('Transaction was rejected by the user');
-                } else if (error.message.includes('0x1')) {
-                    alert('You may already have the maximum number of SMUSD tokens');
-                } else {
-                    throw error;
-                }
+            } else if (wallet?.adapter?.signTransaction) {
+                // Use normal wallet adapter
+                const signedTx = await wallet.adapter.signTransaction(tx);
+                signature = await CONNECTION.sendRawTransaction(signedTx.serialize());
+            } else {
+                throw new Error('No wallet available for signing');
             }
+
+            const confirmation = await CONNECTION.confirmTransaction(signature, 'confirmed');
+            if (confirmation.value.err) {
+                throw new Error(`Transaction failed: ${confirmation.value.err}`);
+            }
+
+            console.log('Transaction confirmed:', signature);
+            alert('Transaction finished. Check your wallet.');
+            update_sol_balance();
+
         } catch (error) {
             console.error('Transaction error:', error);
-            alert(`Transaction failed: ${error.message}`);
+            if (error.message.includes('User rejected')) {
+                alert('Transaction was rejected by the user');
+            } else if (error.message.includes('0x1')) {
+                alert('You may already have the maximum number of SMUSD tokens');
+            } else {
+                alert(`Transaction failed: ${error.message}`);
+            }
         }
     };
 
     useEffect(() => {
-        if (account || connected) {
+        if (account) {
             update_sol_balance();
         }
-    }, [account, connected]);
+    }, [account]);
 
     useEffect(() => {
         CONNECTION.getAccountInfo(MINT_AUTH)
@@ -237,7 +209,7 @@ function Main() {
 
             <div className="flex space-x-4">
                 <ConnectButton />
-                <WalletMultiButton />
+                {/* <WalletMultiButton /> */}
             </div>
             <br />
 
