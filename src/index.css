@@ -1,18 +1,3 @@
-/* :root {
-    background-color: white;
-    color-scheme: only light;
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        color-scheme: light;
-    }
-}
-@media (forced-colors: active) {
-    :root {
-        color-scheme: light;
-    }
-} */
-
 * {
     margin: 0px;
     padding: 0px;
@@ -22,9 +7,15 @@
 html {
     font-family: 'Courier New', Courier, monospace;
     font-size: 16px;
+    height: 100%;
 }
 body {
     background-color: #f0f0de;
+    height: 100%;
+}
+
+#root {
+    height: 100%;
 }
 
 header, main {
@@ -45,6 +36,7 @@ header > img {
 }
 
 header > h1 {
+    margin-left: 20px;
     font-size: 50px;
 }
 
@@ -81,6 +73,12 @@ button:hover{
     margin-bottom: 12px;
 }
 
+button:hover{
+    border-bottom: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+    margin-bottom: 12px;
+}
+
 
 form {
     background-color: white;
@@ -97,3 +95,17 @@ input[type="submit"] {
     background-color: #ffff6f;
     border: 1px solid #cdcd0f;
 }
+
+.wallet-adapter-button-trigger { 
+    color: black !important;
+    background-color: white !important; 
+    padding: 10px 20px;
+    margin: 30px 0px 10px 0px;
+    font-size: 16px;
+    border: 1px solid #aeaeae !important;
+    border-radius: 6px !important;
+    cursor: pointer;
+} 
+.wallet-adapter-button { 
+    font-family: inherit !important; 
+} 
