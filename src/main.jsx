@@ -7,25 +7,14 @@ import {
   Link,
 } from "react-router-dom";
 import './index.css'
-import App from './App'
 import AppP from "./P";
 import './particle.css'
 const router = createBrowserRouter([
   {
-    path: "/home",
-    element: (
-   <div>   <App/></div>
-    ),
-  },
-  {
-    path: "/Faucet",
+    path: "/",
     element: (
    <div>   <AppP/></div>
     ),
-  },
-  {
-    path: "about",
-    element: <div>About</div>,
   },
 ]);
 

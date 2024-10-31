@@ -203,8 +203,8 @@ function Main() {
     return (
         <main>
             <div id="info">
-                <h3>Switch your wallet to devnet to avoid the warnings from Phantom.</h3>
-                <p>Open Phantom, click your wallet on top left, click the cog bottom right, Developer Settings, Testnet Mode.</p>
+                <h3>If you have connected your own wallet, switch it to devnet to avoid the warnings during the transaction.</h3>
+                <p>You will find this option in the settings. For exmaple, on Phantom, click your wallet on top left, click the cog bottom right, Developer Settings, Testnet Mode.</p>
             </div>
 
             <div className="flex space-x-4">

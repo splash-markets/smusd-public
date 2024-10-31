@@ -88,86 +88,8 @@
   }
   
   /* src/styles/font/index.css */
-  @font-face {
-    font-family: "Apercu Pro-Light";
-    font-style: normal;
-    src: url(./Alliance-No-1-Regular-WZT7KIBP.woff2) format("woff2"), url(./Alliance-No-1-Regular-LGX6HLOQ.ttf) format("truetype");
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "Apercu Pro-Mono";
-    font-style: normal;
-    src: url(./Alliance-No-1-Medium-3ITNO56N.woff2) format("woff2"), url(./Alliance-No-1-Medium-TISC4WT5.ttf) format("truetype");
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "Apercu Pro";
-    font-style: normal;
-    src: url(./Alliance-No-1-SemiBold-2WWQPZHS.woff2) format("woff2"), url(./Alliance-No-1-SemiBold-2D6PRMDQ.ttf) format("truetype");
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "Apercu Pro-Medium";
-    font-style: normal;
-    src: url(./Alliance-No-1-Bold-H6IRQAM5.woff2) format("woff2"), url(./Alliance-No-1-Bold-ABEQRDSS.ttf) format("truetype");
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "Apercu Pro-Bold";
-    font-style: normal;
-    src: url(./Alliance-No-2-Bold-JEEK6NA5.woff2) format("woff2"), url(./Alliance-No-2-Bold-RX4FAILL.ttf) format("truetype");
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "Apercu Pro-Black";
-    font-style: normal;
-    src: url(./Alliance-No-2-ExtraBold-XGXNYWG2.woff2) format("woff2"), url(./Alliance-No-2-ExtraBold-VY6OMXVX.ttf) format("truetype");
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "Apercu Pro";
-    font-style: normal;
-    font-weight: 200;
-    src: url(./Alliance-No-1-Regular-WZT7KIBP.woff2) format("woff2"), url(./Alliance-No-1-Regular-LGX6HLOQ.ttf) format("truetype");
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "Apercu Pro";
-    font-style: italic;
-    font-weight: 400;
-    src: url(./Alliance-No-1-Medium-3ITNO56N.woff2) format("woff2"), url(./Alliance-No-1-Medium-TISC4WT5.ttf) format("truetype");
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "Apercu Pro";
-    font-style: normal;
-    font-weight: 450;
-    src: url(./Alliance-No-1-Medium-3ITNO56N.woff2) format("woff2"), url(./Alliance-No-1-Medium-TISC4WT5.ttf) format("truetype");
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "Apercu Pro";
-    font-style: normal;
-    font-weight: 500;
-    src: url(./Alliance-No-1-SemiBold-2WWQPZHS.woff2) format("woff2"), url(./Alliance-No-1-SemiBold-2D6PRMDQ.ttf) format("truetype");
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "Apercu Pro";
-    font-style: normal;
-    font-weight: 600;
-    src: url(./Alliance-No-2-Bold-JEEK6NA5.woff2) format("woff2"), url(./Alliance-No-2-Bold-RX4FAILL.ttf) format("truetype");
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "Apercu Pro";
-    font-style: normal;
-    font-weight: 800;
-    src: url(./Alliance-No-2-ExtraBold-XGXNYWG2.woff2) format("woff2"), url(./Alliance-No-2-ExtraBold-VY6OMXVX.ttf) format("truetype");
-    font-display: swap;
-  }
   .particle-connect-ui .connect-body {
-    font-family: "Apercu Pro";
+    font-family: 'Courier New', Courier, monospace;
   }
   
   /* src/styles/index.css */
@@ -181,7 +103,7 @@
     background-color: white;
     font-size: 13px;
     color: #000;
-    font-weight: 550;
+    font-weight: 1000;
     padding-left: 10px;
     padding-right: 10px;
     /* padding: ; */
@@ -215,7 +137,7 @@
     padding: 10px 14px;
     margin-top: 20px;
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 1000;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     text-overflow: ellipsis;
     overflow: hidden;
@@ -234,7 +156,7 @@
     border-radius: 10px;
     padding: 10px 14px;
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 1000;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     text-overflow: ellipsis;
     overflow: hidden;
@@ -657,8 +579,6 @@
       text-align: center;
       padding-right: 22px;
       box-sizing: border-box;
-    }
-    .particle-connect-modal-group-item {
     }
     .particle-connect-methods-form {
       display: none;
